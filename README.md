@@ -1,2 +1,2 @@
-# The-Game-Project
+# The-HeadJump-Project
 First project: Head Jump
