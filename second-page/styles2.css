@@ -1,0 +1,17 @@
+body {
+  background-image: url("../images/nastya-friday-game-background-2.jpg");
+  background-size: cover;
+  height: 600px;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+}
+
+#game-board{
+  height: 600px;
+  width: 800px;
+}
+
+body h1{
+  background-color: aquamarine;
+}
