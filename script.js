@@ -1,21 +1,43 @@
 let theInt, otherInt, firstInt;
+window.onload = function() {
 
+  var ctx = document.querySelector("#theCanvas").getContext('2d');
  class HeadJump{
   constructor(){
     this.character = {};
     this.blocks = [];
-    this.ctx = document.querySelector("#theCanvas").getContext('2d')
+    // this.ctx = document.querySelector("#theCanvas").getContext('2d')
     // this.score = score;
   }
   
   collisionCheck(){
+    setInterval(()=>{
+
+      this.blocks.forEach((oneBlock)=>{
+        // console.log(oneBlock.y)
+        // if(this.character.y === oneBlock.y &&
+        //    this.character.x=== oneBlock.x){
+        //      console.log("land on block");
+        //    }
+  
+        if((this.character.y + this.character.height === oneBlock.y)&& 
+          (oneBlock.x) < this.character.x && (this.character.x >(oneBlock.x + oneBlock.width))){
+          console.log("AHHHHHH collision!=-=-=--=-=-=-=-=-=-=-=-")
+        }
+
+
+    },50)
+
+    })
+    console.log(this.character.y + this.character.height)
+
+    // console.log("block y: " + this.blocks[9].y, "char y: " + this.character.y + this.character.height)
 
   }
 
   pointsCollector(){}
 
   drawEverything(){
-    console.log("drawing")
     this.character.drawCharacter();
     this.blocks.forEach((oneBlock)=>{
       oneBlock.blocksDraw();
@@ -67,7 +89,7 @@ let theInt, otherInt, firstInt;
   this.y= 550,
   this.y_velocity = 0
   this.imageSource = "../images/nick-on-head.png"
-  this.ctx = document.getElementById("theCanvas").getContext('2d');
+  // this.ctx = document.getElementById("theCanvas").getContext('2d');
   }
 
 
@@ -79,10 +101,10 @@ let theInt, otherInt, firstInt;
   const theImage = new Image();
   theImage.src = this.imageSource;
   
-  theImage.onload = (() => {
-    this.ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
-    console.log("drawing character")
-  })
+  // theImage.onload = (() => {
+    ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
+    // console.log("drawing character")
+  // })
  }
 
  moveAround(number){
@@ -119,21 +141,9 @@ let theInt, otherInt, firstInt;
   //     var up = false;
   
   jump(){
-    // if(number === 38){
-      //   this.y_velocity -= 20;  // CHANGE THE JUMPING HERE!
-      //   console.log("start this.y_velocity: ", this.y_velocity)
-      //   this.y_velocity += 1.5; //gravity
-      
-      //   this.y += this.y_velocity;
-      
-      //   this.y_velocity *= 0.9 //firction
-      //   console.log("end this.y_velocity: ", this.y_velocity)
-      
-      //   // this.jumping = true;
-      // }
-      // if(number === 38){
+    
         setInterval(()=>{
-          console.log("jump interval happening")
+          // console.log("jump interval happening")
           // this.ctx.clearRect(this.x, this.y, this.width, this.height)
           clearInterval(theInt);
           clearInterval(otherInt);
@@ -144,15 +154,15 @@ let theInt, otherInt, firstInt;
           // firstInt = setInterval(() => {
           // this.ctx.clearRect(this.x, this.y, this.width, this.height)
           this.y -= 50;
-          console.log("actually jumping y: " + this.y)
+          // console.log("actually jumping y: " + this.y)
           
           // this.drawCharacter();
           // },50)
           theInt = setInterval(() => {
-          if(this.y < 548){
+          if(this.y <= 550){
               // this.ctx.clearRect(this.x, this.y, this.width, this.height)
               this.y += 5;
-              console.log('falling: ', this.y)
+              // console.log('falling: ', this.y)
               // this.drawCharacter()
             }
           }, 50)
@@ -160,67 +170,21 @@ let theInt, otherInt, firstInt;
           this.y = 50;
           // this.drawCharacter();
           otherInt = setInterval(() => {
-            if(this.y < 548){
+            if(this.y <= 550){
               // this.ctx.clearRect(this.x, this.y, this.width, this.height)
               this.y += 5;
               // this.drawCharacter()
             }
-          }, 5)  
+          }, 50)  
         }
-      }, 10)
-      // }
-
-    // if(number === 39){
-    //   this.x_velocity += 0.5;
-    //   this.x += this.x_velocity;
-    //   this.x_velocity *= 0.9;
-    // }
+      }, 510)
+      ;
+    }
     
-    // this.drawCharacter();
-    // requestAnimationFrame(this.jump());
   }
-
-
-    //   var key_state;
-   
-  //     switch(number) {
-   
-  //       case 37: //left key
-  //       key_state = "left";
-  //       break;
-  //       case 38: //up key
-  //       key_state = "up";
-  //       break;
-  //       case 39: //right key
-  //       key_state = "right";
-  //       case 40: //down key
-  //       key_state = "down";
-  //       break;
-  //     }
-   
-    
-  // // }
   
-
-  //   if(key_state = "up" && this.jumping == false) {
-  //       this.y_velocity -= 20;  // CHANGE THE JUMPING HERE!
-  //       this.jumping = true;
-  //   }
-  //   if(key_state = "left") {
-  //       this.x_velocity -= 0.5;
-  //   }
-  //   if(key_state = "right") {
-  //       this.x_velocity += 0.5;
-  //   }
-  // }
-   
-   
-
-  // window.requestAnimationFrame(jump());
-}
-
-
-
+  
+  
 
 ///////////////////////  BLOCKS CLASS //////////////////////
 
@@ -228,13 +192,13 @@ class Blocks{
   constructor(x,y){
     this.x = x, 
     this.y = y,
-    this.color = "rgb(29, 109, 9)",
-    this.ctx = document.querySelector("#theCanvas").getContext('2d')
+    this.color = "rgb(29, 109, 9)"
+    // this.ctx = document.querySelector("#theCanvas").getContext('2d')
 
   }
   blocksDraw(){
-    this.ctx.fillRect(this.x, this.y, 70, 10);
-    this.ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, 70, 10);
+    ctx.fillStyle = this.color;
 
   }
   blocksMoveRandom(){
@@ -243,7 +207,7 @@ class Blocks{
     var moveToTheLeft = true;
 
     setInterval(()=>{
-      this.ctx.clearRect(this.x, this.y, 70, 10);
+      // ctx.clearRect(this.x, this.y, 70, 10);
       
       if((this.x + 70) > 800){
         moveToTheRight = false;
@@ -260,12 +224,12 @@ class Blocks{
       }
         else{
         this.x -= 10;
-        console.log(this.x)
+        // console.log(this.x)
         
       }
 
 
-       this.blocksDraw();
+      //  this.blocksDraw();
     },50)
   }
   
@@ -282,7 +246,7 @@ class Blocks{
   // console.log('haha')
 
   var newGame;
-  window.onload = function() {
+  
     newGame = new HeadJump();
     newGame.character = new Character;
     newGame.character.drawCharacter();
@@ -293,23 +257,24 @@ class Blocks{
 
     newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,550));
 
-    for(i=0; i< newGame.blocks.length; i++){
-      newGame.blocks[i].blocksDraw();
-    }
+    // for(i=0; i< newGame.blocks.length; i++){
+    //   newGame.blocks[i].blocksDraw();
+    // }
 
     for(i=0; i< newGame.blocks.length; i++){
       newGame.blocks[i].blocksMoveRandom();
       // console.log(`new x of block ${i} is ${newGame.blocks[i].x}`)
     }
 
-  }
+  
 
 
   function animate(){
 
     // setInterval(()=>{
-      newGame.ctx.clearRect(0,0,800,600);
+      ctx.clearRect(0,0,800,600);
       newGame.drawEverything();
+
       newGame.collisionCheck();
       
     // },50)
@@ -318,6 +283,7 @@ class Blocks{
   }
 
   document.onkeydown = function(e){
+    animate();
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
@@ -327,8 +293,9 @@ class Blocks{
       //   newGame.animate();
       // },880) 
     }
-    animate();
   }
+
+}
 
 
 
