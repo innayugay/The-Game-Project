@@ -1,3 +1,4 @@
+let theInt, otherInt, firstInt;
 
  class HeadJump{
   constructor(){
@@ -10,12 +11,12 @@
 
   pointsCollector(){}
 
-  animate(){
-    window.requestAnimationFrame(character.jump());
-    window.addEventListener("keydown", controller.keyListener)
-    window.addEventListener("keyup", controller.keyListener);
+  // animate(){
+  //   window.requestAnimationFrame(character.jump());
+  //   window.addEventListener("keydown", controller.keyListener)
+  //   window.addEventListener("keyup", controller.keyListener);
 
-  }
+  // }
 
   gameOver(){}
 
@@ -49,7 +50,7 @@
 
  drawCharacter(){
   
-  console.log(this)
+  // console.log(this)
   
   const theImage = new Image();
   theImage.src = this.imageSource;
@@ -57,9 +58,7 @@
   theImage.onload = (() => {
     
     this.ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
-    
-
-
+  
   })
  }
 
@@ -96,28 +95,73 @@
   //     var right = false;
   //     var up = false;
   
-  jump(number){
+  jump(){
 
-    // this.ctx.clearRect(this.x, this.y, this.width, this.height)
-    console.log(number);
-    if(number === 38){
-      this.y_velocity -= 20;  // CHANGE THE JUMPING HERE!
-      this.y_velocity += 1.5; //gravity
+   
+    
+    
+    
+    // if(number === 38){
+      //   this.y_velocity -= 20;  // CHANGE THE JUMPING HERE!
+      //   console.log("start this.y_velocity: ", this.y_velocity)
+      //   this.y_velocity += 1.5; //gravity
       
-      this.y += this.y_velocity;
+      //   this.y += this.y_velocity;
+      
+      //   this.y_velocity *= 0.9 //firction
+      //   console.log("end this.y_velocity: ", this.y_velocity)
+      
+      //   // this.jumping = true;
+      // }
+      // if(number === 38){
+        setInterval(()=>{
+          console.log("jump interval happening")
+          this.ctx.clearRect(this.x, this.y, this.width, this.height)
+          clearInterval(theInt);
+          clearInterval(otherInt);
+          clearInterval(firstInt);
 
-      this.y_velocity *= 0.9 //firction
-      this.jumping = true;
-    }
 
-    if(number === 39){
-      this.x_velocity += 0.5;
-      this.x += this.x_velocity;
-      this.x_velocity *= 0.9;
-    }
+
+        // console.log('before: ', this.y)
+        if(this.y > 50){
+          // firstInt = setInterval(() => {
+          this.ctx.clearRect(this.x, this.y, this.width, this.height)
+          console.log("actually jumping")
+          this.y -= 50;
+          // console.log('in between: ', this.y)
+          this.drawCharacter();
+          // },50)
+          theInt = setInterval(() => {
+          if(this.y < 548){
+              this.ctx.clearRect(this.x, this.y, this.width, this.height)
+              this.y += 5;
+              console.log('after: ', this.y)
+              this.drawCharacter()
+            }
+          }, 50)
+        } else {
+          this.y = 50;
+          this.drawCharacter();
+          otherInt = setInterval(() => {
+            if(this.y < 548){
+              this.ctx.clearRect(this.x, this.y, this.width, this.height)
+              this.y += 5;
+              this.drawCharacter()
+            }
+          }, 5)  
+        }
+      }, 1000)
+      // }
+
+    // if(number === 39){
+    //   this.x_velocity += 0.5;
+    //   this.x += this.x_velocity;
+    //   this.x_velocity *= 0.9;
+    // }
     
     // this.drawCharacter();
-  
+    // requestAnimationFrame(this.jump());
   }
 
 
@@ -165,16 +209,17 @@
 ///////////////////////  BLOCKS CLASS //////////////////////
 
 class Blocks{
-  constructor(){
-    this.x = 200, 
-    this.y = 400,
-    this.color = "green",
+  constructor(x,y){
+    this.x = x, 
+    this.y = y,
+    this.color = "rgb(29, 109, 9)",
     this.ctx = document.querySelector("#theCanvas").getContext('2d')
 
   }
   blocksDraw(){
-    this.ctx.fillRect(this.x, this.y, 100, 30);
-    
+    this.ctx.fillRect(this.x, this.y, 70, 10);
+    this.ctx.fillStyle = this.color;
+
   }
 
 
@@ -199,18 +244,29 @@ class Blocks{
     newGame = new HeadJump();
     newGame.character = new Character;
     newGame.character.drawCharacter();
-    newGame.character.jump(number);
+    // newGame.character.jump();
     // setInterval(newGame.character.jump(),20);
     newGame.character.moveAround();
 
+    newGame.blocks.push(new Blocks(100,100), new Blocks (200,200), new Blocks (150,400), new Blocks(400,150), new Blocks(450,550))
+
+    for(i=0; i< newGame.blocks.length; i++){
+      newGame.blocks[i].blocksDraw();
+    }
 
   }
 
   document.onkeydown = function(e){
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
-    newGame.character.jump(whereToGo);
+    if(e.keyCode === 38){
+      newGame.character.jump();
+    }
   }
+
+
+
+
 
 
 
