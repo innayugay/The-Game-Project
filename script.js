@@ -15,31 +15,32 @@ let theInt, otherInt, firstInt;
   pointsCollector(){}
 
   drawEverything(){
+    console.log("drawing")
     this.character.drawCharacter();
     this.blocks.forEach((oneBlock)=>{
       oneBlock.blocksDraw();
     })
   }
 
-  animate(){
+  // animate(){
    
-    // console.log(this.character.ctx + "ctx")
+  //   // console.log(this.character.ctx + "ctx")
 
-    setInterval(()=>{
-      // this.character.ctx.clearRect(this.x, this.y, this.width, this.height);
-      // console.log('clearing y: ' + this.character.y)
-      // setTimeout(()=>{
-      //   console.log('drawing y: ' + this.character.y)
-      //   this.character.drawCharacter();
+  //   setInterval(()=>{
+  //     // this.character.ctx.clearRect(this.x, this.y, this.width, this.height);
+  //     // console.log('clearing y: ' + this.character.y)
+  //     // setTimeout(()=>{
+  //     //   console.log('drawing y: ' + this.character.y)
+  //     //   this.character.drawCharacter();
 
-      // },20)
+  //     // },20)
 
-      this.ctx.clearRect(this.x, this.y, this.width, this.height);
-      this.drawEverything();
-      this.collisionCheck();
-    },50)
+  //     this.ctx.clearRect(this.x, this.y, this.width, this.height);
+  //     this.drawEverything();
+  //     this.collisionCheck();
+  //   },50)
   
-  }
+  // }
 
   gameOver(){}
 
@@ -80,12 +81,12 @@ let theInt, otherInt, firstInt;
   
   theImage.onload = (() => {
     this.ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
-  
+    console.log("drawing character")
   })
  }
 
  moveAround(number){
-  this.ctx.clearRect(this.x, this.y, this.width, this.height)
+  // this.ctx.clearRect(this.x, this.y, this.width, this.height)
   switch(number){
     case 37: //left key
     if(this.x > 20){
@@ -103,7 +104,7 @@ let theInt, otherInt, firstInt;
 
 
   }
-  this.drawCharacter();
+  // this.drawCharacter();
 
  }
 
@@ -166,7 +167,7 @@ let theInt, otherInt, firstInt;
             }
           }, 5)  
         }
-      }, 900)
+      }, 10)
       // }
 
     // if(number === 39){
@@ -237,34 +238,36 @@ class Blocks{
 
   }
   blocksMoveRandom(){
-    var withinRightBorder = true;
-    var withinLeftBorder = true;
+    
+    var moveToTheRight = true;
+    var moveToTheLeft = true;
 
     setInterval(()=>{
       this.ctx.clearRect(this.x, this.y, 70, 10);
       
       if((this.x + 70) > 800){
-        withinRightBorder = false;
+        moveToTheRight = false;
+        moveToTheLeft = true;
       }
 
       if(this.x < 0){
-        withinLeftBorder = false;
+      moveToTheLeft = false;
+      moveToTheRight = true;
       }
-
-      if(withinRightBorder || withinLeftBorder === false){
+     
+       if(moveToTheRight || moveToTheLeft === false){
         this.x += 10;
       }
-      else{
+        else{
         this.x -= 10;
         console.log(this.x)
         
       }
 
-      this.blocksDraw();
-    },400)
+
+       this.blocksDraw();
+    },50)
   }
-
-
   
 }
 //  ///////////
@@ -301,16 +304,30 @@ class Blocks{
 
   }
 
+
+  function animate(){
+
+    // setInterval(()=>{
+      newGame.ctx.clearRect(0,0,800,600);
+      newGame.drawEverything();
+      newGame.collisionCheck();
+      
+    // },50)
+
+    window.requestAnimationFrame(animate);
+  }
+
   document.onkeydown = function(e){
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
       newGame.character.jump();
-      setTimeout(()=>{
-        console.log("animating")
-        newGame.animate();
-      },880) 
+      // setTimeout(()=>{
+      //   console.log("animating")
+      //   newGame.animate();
+      // },880) 
     }
+    animate();
   }
 
 
