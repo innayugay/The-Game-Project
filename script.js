@@ -4,19 +4,42 @@ let theInt, otherInt, firstInt;
   constructor(){
     this.character = {};
     this.blocks = [];
+    this.ctx = document.querySelector("#theCanvas").getContext('2d')
     // this.score = score;
   }
   
-  collision(){}
+  collisionCheck(){
+
+  }
 
   pointsCollector(){}
 
-  // animate(){
-  //   window.requestAnimationFrame(character.jump());
-  //   window.addEventListener("keydown", controller.keyListener)
-  //   window.addEventListener("keyup", controller.keyListener);
+  drawEverything(){
+    this.character.drawCharacter();
+    this.blocks.forEach((oneBlock)=>{
+      oneBlock.blocksDraw();
+    })
+  }
 
-  // }
+  animate(){
+   
+    // console.log(this.character.ctx + "ctx")
+
+    setInterval(()=>{
+      // this.character.ctx.clearRect(this.x, this.y, this.width, this.height);
+      // console.log('clearing y: ' + this.character.y)
+      // setTimeout(()=>{
+      //   console.log('drawing y: ' + this.character.y)
+      //   this.character.drawCharacter();
+
+      // },20)
+
+      this.ctx.clearRect(this.x, this.y, this.width, this.height);
+      this.drawEverything();
+      this.collisionCheck();
+    },50)
+  
+  }
 
   gameOver(){}
 
@@ -35,9 +58,9 @@ let theInt, otherInt, firstInt;
   // this.imageSource = "../images/nick-on-head.png"
   // }
   constructor(){
-  this.height = 32,
+  this.height = 52,
   this.jumping = true,
-  this.width = 32,
+  this.width = 52,
   this.x = 144,
   this.x_velocity= 0,
   this.y= 550,
@@ -56,7 +79,6 @@ let theInt, otherInt, firstInt;
   theImage.src = this.imageSource;
   
   theImage.onload = (() => {
-    
     this.ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
   
   })
@@ -96,11 +118,6 @@ let theInt, otherInt, firstInt;
   //     var up = false;
   
   jump(){
-
-   
-    
-    
-    
     // if(number === 38){
       //   this.y_velocity -= 20;  // CHANGE THE JUMPING HERE!
       //   console.log("start this.y_velocity: ", this.y_velocity)
@@ -116,42 +133,40 @@ let theInt, otherInt, firstInt;
       // if(number === 38){
         setInterval(()=>{
           console.log("jump interval happening")
-          this.ctx.clearRect(this.x, this.y, this.width, this.height)
+          // this.ctx.clearRect(this.x, this.y, this.width, this.height)
           clearInterval(theInt);
           clearInterval(otherInt);
           clearInterval(firstInt);
 
-
-
         // console.log('before: ', this.y)
         if(this.y > 50){
           // firstInt = setInterval(() => {
-          this.ctx.clearRect(this.x, this.y, this.width, this.height)
-          console.log("actually jumping")
+          // this.ctx.clearRect(this.x, this.y, this.width, this.height)
           this.y -= 50;
-          // console.log('in between: ', this.y)
-          this.drawCharacter();
+          console.log("actually jumping y: " + this.y)
+          
+          // this.drawCharacter();
           // },50)
           theInt = setInterval(() => {
           if(this.y < 548){
-              this.ctx.clearRect(this.x, this.y, this.width, this.height)
+              // this.ctx.clearRect(this.x, this.y, this.width, this.height)
               this.y += 5;
-              console.log('after: ', this.y)
-              this.drawCharacter()
+              console.log('falling: ', this.y)
+              // this.drawCharacter()
             }
           }, 50)
         } else {
           this.y = 50;
-          this.drawCharacter();
+          // this.drawCharacter();
           otherInt = setInterval(() => {
             if(this.y < 548){
-              this.ctx.clearRect(this.x, this.y, this.width, this.height)
+              // this.ctx.clearRect(this.x, this.y, this.width, this.height)
               this.y += 5;
-              this.drawCharacter()
+              // this.drawCharacter()
             }
           }, 5)  
         }
-      }, 1000)
+      }, 900)
       // }
 
     // if(number === 39){
@@ -221,9 +236,33 @@ class Blocks{
     this.ctx.fillStyle = this.color;
 
   }
+  blocksMoveRandom(){
+    var withinRightBorder = true;
+    var withinLeftBorder = true;
 
+    setInterval(()=>{
+      this.ctx.clearRect(this.x, this.y, 70, 10);
+      
+      if((this.x + 70) > 800){
+        withinRightBorder = false;
+      }
 
-  blocksMoveRandom(){}
+      if(this.x < 0){
+        withinLeftBorder = false;
+      }
+
+      if(withinRightBorder || withinLeftBorder === false){
+        this.x += 10;
+      }
+      else{
+        this.x -= 10;
+        console.log(this.x)
+        
+      }
+
+      this.blocksDraw();
+    },400)
+  }
 
 
   
@@ -248,10 +287,16 @@ class Blocks{
     // setInterval(newGame.character.jump(),20);
     newGame.character.moveAround();
 
-    newGame.blocks.push(new Blocks(100,100), new Blocks (200,200), new Blocks (150,400), new Blocks(400,150), new Blocks(450,550))
+
+    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,550));
 
     for(i=0; i< newGame.blocks.length; i++){
       newGame.blocks[i].blocksDraw();
+    }
+
+    for(i=0; i< newGame.blocks.length; i++){
+      newGame.blocks[i].blocksMoveRandom();
+      // console.log(`new x of block ${i} is ${newGame.blocks[i].x}`)
     }
 
   }
@@ -261,6 +306,10 @@ class Blocks{
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
       newGame.character.jump();
+      setTimeout(()=>{
+        console.log("animating")
+        newGame.animate();
+      },880) 
     }
   }
 
