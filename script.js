@@ -2,6 +2,7 @@ let theInt, otherInt, firstInt;
 window.onload = function() {
 
   var ctx = document.querySelector("#theCanvas").getContext('2d');
+
  class HeadJump{
   constructor(){
     this.character = {};
@@ -10,29 +11,60 @@ window.onload = function() {
     // this.score = score;
   }
   
-  collisionCheck(){
-    setInterval(()=>{
+  // collisionCheck(){
+    
+  //     this.blocks.forEach((oneBlock)=>{
+  //       // console.log(this.character.y + this.character.height)
+  //       // console.log("block's y: " + this.blocks[11].y);
+  //       // console.log("block's x: " + this.blocks[11].x);
+  //       // console.log("block's width" + this.blocks[11].width)
+  //       // console.log("block's x plus width: " + (this.blocks[11].x + this.blocks[11].width));
+  //       // console.log("char's x: " + this.character.x)
 
-      this.blocks.forEach((oneBlock)=>{
-        // console.log(oneBlock.y)
-        // if(this.character.y === oneBlock.y &&
-        //    this.character.x=== oneBlock.x){
-        //      console.log("land on block");
-        //    }
+  //       // console.log("character's y: " + this.character.y); 
+  //       // console.log("character's height: " + this.character.height);
+      
   
-        if((this.character.y + this.character.height === oneBlock.y)&& 
-          (oneBlock.x) < this.character.x && (this.character.x >(oneBlock.x + oneBlock.width))){
-          console.log("AHHHHHH collision!=-=-=--=-=-=-=-=-=-=-=-")
-        }
+  //       if((this.character.y + this.character.height === oneBlock.y) && 
+  //         (oneBlock.x) < this.character.x && (this.character.x < (oneBlock.x + oneBlock.width))){
+  //           this.character.y = oneBlock.y - this.character.height;
+  //           console.log("=-=-=-=-=-=-====-=-=-==AHHHHHH collision!=-=-=--=-=-=-=-=-=-=-=-")
+  //       }
+
+  //       // if((this.character.y + this.character.height === this.blocks[11].y) && 
+  //       //   (this.blocks[11].x) < this.character.x && (this.character.x < (this.blocks[11].x + this.blocks[11].width))){
+  //       //   console.log("==-=-=-=-=-=-=-=-=-=-=-=-=-AHHHHHH collision!=-=-=--=-=-=-=-=-=-=-=-")
+  //       // }
 
 
-    },50)
+  //   })
+  //   // console.log(this.character.y + this.character.height)
 
-    })
-    console.log(this.character.y + this.character.height)
+  //   // console.log("block y: " + this.blocks[9].y, "char y: " + this.character.y + this.character.height)
 
-    // console.log("block y: " + this.blocks[9].y, "char y: " + this.character.y + this.character.height)
+  // }
 
+
+  collisionCheck(){
+
+    // if(this.character.x < this.blocks.x + this.blocks.width &&
+    // this.character.x + this.character.width > this.blocks.x &&
+    // this.character.x < this.blocks.y + this.blocks.height &&
+    // this.character.y + this.character.height > this.blocks.y) {
+    //   consle.log('Collision Detected')
+    // }
+    
+    
+         this.blocks.forEach((eachObstacle)=>{
+    
+                 if((this.character.x + this.character.width >= eachObstacle.x && this.character.x <= eachObstacle.x+eachObstacle.width) &&
+                 (this.character.y + this.character.height >= eachObstacle.y && this.character.y <= eachObstacle.y+eachObstacle.height)){
+                   // console.log("AHHHHHH collision!=-=-=--=-=-=-=-=-=-=-=-")
+                   this.character.y = eachObstacle.y - this.character.height;
+                   // console.log('where am I')
+                 }
+    
+         })
   }
 
   pointsCollector(){}
@@ -43,26 +75,6 @@ window.onload = function() {
       oneBlock.blocksDraw();
     })
   }
-
-  // animate(){
-   
-  //   // console.log(this.character.ctx + "ctx")
-
-  //   setInterval(()=>{
-  //     // this.character.ctx.clearRect(this.x, this.y, this.width, this.height);
-  //     // console.log('clearing y: ' + this.character.y)
-  //     // setTimeout(()=>{
-  //     //   console.log('drawing y: ' + this.character.y)
-  //     //   this.character.drawCharacter();
-
-  //     // },20)
-
-  //     this.ctx.clearRect(this.x, this.y, this.width, this.height);
-  //     this.drawEverything();
-  //     this.collisionCheck();
-  //   },50)
-  
-  // }
 
   gameOver(){}
 
@@ -85,7 +97,7 @@ window.onload = function() {
   this.jumping = true,
   this.width = 52,
   this.x = 144,
-  this.x_velocity= 0,
+  this.x_velocity= 20,
   this.y= 550,
   this.y_velocity = 0
   this.imageSource = "../images/nick-on-head.png"
@@ -140,64 +152,98 @@ window.onload = function() {
   //     var right = false;
   //     var up = false;
   
-  jump(){
-    
-        setInterval(()=>{
-          // console.log("jump interval happening")
-          // this.ctx.clearRect(this.x, this.y, this.width, this.height)
-          clearInterval(theInt);
-          clearInterval(otherInt);
-          clearInterval(firstInt);
-
-        // console.log('before: ', this.y)
-        if(this.y > 50){
-          // firstInt = setInterval(() => {
-          // this.ctx.clearRect(this.x, this.y, this.width, this.height)
-          this.y -= 50;
-          // console.log("actually jumping y: " + this.y)
+  //       setInterval(()=>{
+  //         clearInterval(theInt);
+  //         clearInterval(otherInt);
+  //         clearInterval(firstInt);
+  //       if(this.y > 50){
           
-          // this.drawCharacter();
-          // },50)
-          theInt = setInterval(() => {
-          if(this.y <= 550){
-              // this.ctx.clearRect(this.x, this.y, this.width, this.height)
-              this.y += 5;
-              // console.log('falling: ', this.y)
-              // this.drawCharacter()
-            }
-          }, 50)
-        } else {
-          this.y = 50;
-          // this.drawCharacter();
-          otherInt = setInterval(() => {
-            if(this.y <= 550){
-              // this.ctx.clearRect(this.x, this.y, this.width, this.height)
-              this.y += 5;
-              // this.drawCharacter()
-            }
-          }, 50)  
-        }
-      }, 510)
-      ;
+  //         this.y -= 50;
+         
+
+  //         theInt = setInterval(() => {
+  //         if(this.y <= 550){
+  //             this.y += 5;
+  //           }
+  //         }, 50)
+  //       } else {
+  //         this.y = 50;
+  //         /
+  //         otherInt = setInterval(() => {
+  //           if(this.y <= 550){
+              
+  //             this.y += 5;
+  //             // this.drawCharacter()
+  //           }
+  //         }, 50)  
+  //       }
+  //     }, 510)
+  //     ;
+  //   }
+  
+   update(){
+  
+    var upLimit = this.y;
+    var jumpUp = false;
+    var jumpDown = false;
+    // var a = false;
+    
+    setInterval(()=>{
+    if(this.y >= 550){
+      jumpUp = true;
+      jumpDown = false;
+    } 
+    if (this.y <= 500){
+      jumpDown = true;
+      jumpUp = false;
     }
     
+      if(jumpUp === true){
+        // console.log("moving up");
+        this.y -= 2;
+        // console.log(this.y)
+     }
+      else{
+        // this.y += this.y_velocity;
+        this.y += 2;
+        // consoles.log(this.y)
+        // console.log("moving down");
+      }
+    }, 50)
+
   }
+
+
+
+
+  //  controlJump(){
+  //    setInterval(()=>{
+  //     console.log("control jump")
+  //     this.update();
+  //    }, 100)
+  //  }
+  }
+
+    
+
   
   
   
 
 ///////////////////////  BLOCKS CLASS //////////////////////
 
-class Blocks{
+ class Blocks{
   constructor(x,y){
     this.x = x, 
     this.y = y,
+    this.width = 70;
+    this.height = 10;
     this.color = "rgb(29, 109, 9)"
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
 
   }
   blocksDraw(){
-    ctx.fillRect(this.x, this.y, 70, 10);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
     ctx.fillStyle = this.color;
 
   }
@@ -219,7 +265,7 @@ class Blocks{
       moveToTheRight = true;
       }
      
-       if(moveToTheRight || moveToTheLeft === false){
+       if(moveToTheRight){
         this.x += 10;
       }
         else{
@@ -230,20 +276,10 @@ class Blocks{
 
 
       //  this.blocksDraw();
-    },50)
+    },100)
+  } 
   }
   
-}
-//  ///////////
-  // var game = new HeadJump;
-  // game.animate();
-
-  // var blocks = new Blocks;
-  // blocks.blocksDraw();
-  // var character = new Character;
-  // character.drawCharacter();
-  // character.jump();
-  // console.log('haha')
 
   var newGame;
   
@@ -255,7 +291,7 @@ class Blocks{
     newGame.character.moveAround();
 
 
-    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,550));
+    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,554));
 
     // for(i=0; i< newGame.blocks.length; i++){
     //   newGame.blocks[i].blocksDraw();
@@ -287,7 +323,8 @@ class Blocks{
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
-      newGame.character.jump();
+      newGame.character.update();
+      // newGame.character.controlJump();
       // setTimeout(()=>{
       //   console.log("animating")
       //   newGame.animate();
@@ -296,6 +333,7 @@ class Blocks{
   }
 
 }
+ 
 
 
 
