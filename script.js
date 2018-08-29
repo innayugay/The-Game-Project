@@ -1,8 +1,11 @@
 let theInt, otherInt, firstInt;
+
 var moveBottom = true;
-window.onload = function() {
-  
+
+ window.onload = function() {
+
   var ctx = document.querySelector("#theCanvas").getContext('2d');
+
  class HeadJump{
   constructor(){
     this.character = {};
@@ -11,6 +14,7 @@ window.onload = function() {
     // this.score = score;
   }
   
+
   collisionCheck(){
     
 // if(this.character.x < this.blocks.x + this.blocks.width && 
@@ -33,8 +37,9 @@ window.onload = function() {
       })  
   }
 
-  pointsCollector(){}
 
+ 
+   
   drawEverything(){
     this.character.drawCharacter();
     this.blocks.forEach((oneBlock)=>{
@@ -59,7 +64,7 @@ window.onload = function() {
   this.jumping = true,
   this.width = 52,
   this.x = 144,
-  this.x_velocity= 0,
+  this.x_velocity= 20,
   this.y= 550,
   this.y_velocity = 0
   this.imageSource = "../images/nick-on-head.png"
@@ -136,18 +141,59 @@ window.onload = function() {
 
     
   }
+
+   update(){
+  
+    var upLimit = this.y;
+    var jumpUp = false;
+    var jumpDown = false;
+    // var a = false;
+    
+    setInterval(()=>{
+    if(this.y >= 550){
+      jumpUp = true;
+      jumpDown = false;
+    } 
+    if (this.y <= 500){
+      jumpDown = true;
+      jumpUp = false;
+    }
+    
+      if(jumpUp === true){
+        // console.log("moving up");
+        this.y -= 2;
+        // console.log(this.y)
+     }
+      else{
+        // this.y += this.y_velocity;
+        this.y += 2;
+        // consoles.log(this.y)
+        // console.log("moving down");
+      }
+    }, 50)
+
+  }
+
+
+
+
+
+    
+
   
   
   
 
 ///////////////////////  BLOCKS CLASS //////////////////////
 
-class Blocks{
+
+ class Blocks{
   constructor(x,y){
-    this.width = 70;
-    this.height = 10;
     this.x = x, 
     this.y = y,
+    this.width = 70;
+    this.height = 10;
+
     this.color = "rgb(29, 109, 9)"
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
 
@@ -170,12 +216,16 @@ class Blocks{
         moveToTheLeft = true;
       }
 
+
       if(this.x < 10){
+      
+
       moveToTheLeft = false;
       moveToTheRight = true;
       }
      
        if(moveToTheRight || moveToTheLeft === false){
+
         this.x += 10;
       }
         else{
@@ -189,6 +239,7 @@ class Blocks{
 }
 
 
+
   var newGame;
   
     newGame = new HeadJump();
@@ -200,6 +251,7 @@ class Blocks{
 
 
     newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,550));
+
 
     // for(i=0; i< newGame.blocks.length; i++){
     //   newGame.blocks[i].blocksDraw();
@@ -228,11 +280,13 @@ class Blocks{
 
   document.onkeydown = function(e){
     // HeadJump.collisionCheck;
+
     animate();
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
       newGame.character.update();
+
       // setTimeout(()=>{
       //   console.log("animating")
       //   newGame.animate();
@@ -241,6 +295,7 @@ class Blocks{
   }
 
 }
+
 
 
 

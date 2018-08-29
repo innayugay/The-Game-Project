@@ -21,8 +21,8 @@ controller = {
    right: false,
    up: false,
    keyListener:function(event) {
-
-       var key_state = (event.type == "keydown")?true:false;
+ 
+    var key_state = (event.type == "keydown")?true:false;
 
        switch(event.keyCode) {
 
