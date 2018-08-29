@@ -1,5 +1,8 @@
 let theInt, otherInt, firstInt;
-window.onload = function() {
+
+var moveBottom = true;
+
+ window.onload = function() {
 
   var ctx = document.querySelector("#theCanvas").getContext('2d');
 
@@ -11,6 +14,7 @@ window.onload = function() {
     // this.score = score;
   }
   
+
   // collisionCheck(){
   //   this.blocks.forEach((eachObstacle)=>{
           
@@ -62,14 +66,18 @@ window.onload = function() {
 
 
 
-  pointsCollector(){}
 
+
+ 
+   
   drawEverything(){
     this.character.drawCharacter();
     this.blocks.forEach((oneBlock)=>{
       oneBlock.blocksDraw();
     })
   }
+
+ 
 
   gameOver(){}
 
@@ -125,6 +133,39 @@ window.onload = function() {
  }
 
   
+
+
+
+  
+
+  update() {
+    var jumpUp = false;
+    var jumpDown = false;
+    var intL = setInterval(()=> {
+      if(this.y >= 550) {
+        jumpUp = true;
+        jumpDown = false;
+        // this.y += 5;
+      } 
+      if(this.y <= 500) {
+        jumpUp = false;
+        jumpDown = true;
+        // this.y -= 5;
+      }
+      if(jumpUp === true) {
+        this.y -= 5;
+      } else {
+        this.y += 5;
+      }
+    }, 70) 
+
+
+    // window.requestAnimationFrame(this.update());
+  }
+
+    
+  }
+
    update(){
 
     this.upLimit = 500;
@@ -154,7 +195,9 @@ window.onload = function() {
 }
 
 
+
 ///////////////////////  BLOCKS CLASS //////////////////////
+
 
  class Blocks{
   constructor(x,y){
@@ -162,6 +205,7 @@ window.onload = function() {
     this.y = y,
     this.width = 70;
     this.height = 10;
+
     this.color = "rgb(29, 109, 9)"
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
 
@@ -184,11 +228,15 @@ window.onload = function() {
         moveToTheLeft = true;
       }
 
-      if(this.x < 0){
+
+      if(this.x < 10){
+      
+
       moveToTheLeft = false;
       moveToTheRight = true;
       }
      
+
        if(moveToTheRight){
         this.x += 5;
       }
@@ -199,8 +247,12 @@ window.onload = function() {
       }
     },50)
   } 
+
   }
   
+}
+
+
 
   var newGame;
   
@@ -210,7 +262,8 @@ window.onload = function() {
     newGame.character.moveAround();
 
 
-    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,554));
+    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,550));
+
 
     for(i=0; i< newGame.blocks.length; i++){
       newGame.blocks[i].blocksMoveRandom();
@@ -234,12 +287,14 @@ window.onload = function() {
   }
 
   document.onkeydown = function(e){
+    // HeadJump.collisionCheck;
+
     animate();
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
       newGame.character.update();
-      // newGame.character.controlJump();
+
       // setTimeout(()=>{
       //   console.log("animating")
       //   newGame.animate();
@@ -248,12 +303,6 @@ window.onload = function() {
   }
 
 }
- 
-
-
-
-
-
 
 
 
