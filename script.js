@@ -3,11 +3,18 @@ var b;
 window.onload = function() {
   
   var ctx = document.querySelector("#theCanvas").getContext('2d');
+  var sounds = new Audio();
+  sounds.src = "../sounds/Crowd Boo 5-SoundBible.com-339165240.mp3"
+  var sound = new Audio();
+  sound.src = "../sounds/Stadium Applause-SoundBible.com-1018949101.mp3"
  class HeadJump{
   constructor(){
     this.character = {};
     this.blocks = [];
     this.building;
+   this.gameStart = false;
+    // this.groundTouch.y = 550;
+    this.baseImageTwo = '../images/IMG_9767.jpg';
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
     // this.score = score;
   }
@@ -17,7 +24,7 @@ window.onload = function() {
   
               if((this.character.x + this.character.width >= eachObstacle.x && this.character.x <= eachObstacle.x+eachObstacle.width) &&
               (this.character.y + this.character.height >= eachObstacle.y && this.character.y + this.character.height <=   eachObstacle.y+eachObstacle.height)){
-              
+              this.gameStart = true;
                 this.character.y = eachObstacle.y - this.character.height;
                 // this.character.y += 5;
                 this.character.onTheBlock = true;
@@ -51,24 +58,48 @@ window.onload = function() {
 checkIfWin() {
   if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x + this.building.width) &&
   (this.character.y + this.character.height >= this.building.y && this.character.y  <= this.building.y+this.building.height)) {
- alert('You win');
+    sound.play();
+    this.make_base();
+    alert('Good Job!')
+ console.log('it works');
+
   } 
 } 
 
-  gameOver(){}
+  gameOver(){
+    
+    if(this.character.y >= 550 && this.gameStart === true) {
+      sounds.play();
+    alert('LOSER!');
+    }
+   
+  }
 
   
  
+  make_base() {
+    console.log('heyyyyy')
+    const baseImage = new Image();
+    // baseImage.onload = () => {
+      baseImage.src = '../images/IMG_9767.jpg';
+      ctx.drawImage(baseImage, 0, 100, 800, 500);
+    // }
+     console.log(baseImage.src)
+  } 
 }
+
+
 
  class Building {
    constructor() {
-this.y = 30;
+this.y = 10;
 this.x = 600;
 this.width = 50;
 this.height = 50;
 this.imageSourceS = "../images/building-icon.png"
    }
+
+   
 
    drawBuilding() {
 
@@ -153,12 +184,14 @@ this.imageSourceS = "../images/building-icon.png"
       if(this.y <= this.upLimit) {
         jumpUp = false;
         jumpDown = true;
+        // sounds.play();
         // this.y -= 5;
       }
       if(jumpUp === true) {
         this.y -= 5;
       } else {
         this.y += 5;
+       
       }
     }, 35) 
 
@@ -181,7 +214,7 @@ var intL;
 
 class Blocks{
   constructor(x,y){
-    this.width = 60;
+    this.width = 50;
     this.height = 10;
     this.x = x, 
     this.y = y,
@@ -254,7 +287,10 @@ class Blocks{
         ctx.clearRect(0,0,800,600);
         newGame.drawEverything();
         newGame.checkIfWin();
+        // newGame.gameOver();
         newGame.collisionCheck();
+        newGame.gameOver();
+        // newGame.make_base();
         
         // },50)
         
