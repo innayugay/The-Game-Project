@@ -1,5 +1,6 @@
 let theInt, otherInt, firstInt;
 var b;
+var test;
 window.onload = function() {
   
   var ctx = document.querySelector("#theCanvas").getContext('2d');
