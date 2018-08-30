@@ -20,7 +20,7 @@ body {
   margin-top: 20px;
   color: white;
   font-family: the-font;
-  background-color: rgb(91, 181, 189, 0.7);
+  /* background-color: rgb(91, 181, 189, 0.7); */
 }
 
 @font-face{

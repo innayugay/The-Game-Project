@@ -67,11 +67,11 @@ window.onload = function() {
   checkIfWin(){
     if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
     (this.character.y + this.character.height >= this.building.y && this.character.y <= this.building.y+this.building.height)){
+      alert(`YOU DA WINNER! Your time score is ${this.score}`);
       soundWin.play();
       this.make_base();
-      alert(`YOU DA WINNER! Your time score is ${this.score}`);
-      // if (alert(`YOU DA WINNER! Your time score is ${this.score}`)) {
-      // }
+      if (alert(`YOU DA WINNER! Your time score is ${this.score}`)) {
+      }
     }
   }
   
@@ -87,7 +87,6 @@ window.onload = function() {
   timer() {
   var ms = 1;
   var s = 0;
-
   
   setInterval(()=> {
     ms++;
@@ -103,11 +102,7 @@ window.onload = function() {
     else{
       this.score = document.getElementById("timer").innerHTML = `${s} : ${ms}`
     }
-    }, 10);
-
-    
- 
-   
+    }, 10);   
   }
 
  }
