@@ -2,47 +2,26 @@ let theInt, otherInt, firstInt;
 window.onload = function() {
 
   var ctx = document.querySelector("#theCanvas").getContext('2d');
-
+  var sound = new Audio();
+  sound.src = "../sounds/jump.mp3";
  class HeadJump{
   constructor(){
     this.character = {};
     this.blocks = [];
+    this.building;
+    this.lifes = 3;
+
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
     // this.score = score;
   }
-  
-  // collisionCheck(){
-  //   this.blocks.forEach((eachObstacle)=>{
-          
-  //       if((this.character.x + this.character.width >= eachObstacle.x &&      this.character.x <= eachObstacle.x+eachObstacle.width) &&
-  //       (this.character.y + this.character.height <= eachObstacle.y)){
-  //        // console.log("AHHHHHH collision!=-=-=--=-=-=-=-=-=-=-=-")
-  //         this.character.y = eachObstacle.y - this.character.height;
-  //         this.character.onTheBlock = true;
-  //           setTimeout(()=>{
-  //           this.character.onTheBlock = false
-
-  //           },750)
-  //        console.log(this.character.upLimit)
-  //        this.character.upLimit = this.character.y - 50;
-  //        // console.log('where am I')
-  //       }
-  //       else{
-  //         if(this.character.onTheBlock === false){
-  //          this.character.upLimit = 500;
-
-  //         }
-  //       }
-    
-  //        })
-  // }
 
   collisionCheck(){
     this.blocks.forEach((eachObstacle)=>{
 
             if((this.character.x + this.character.width >= eachObstacle.x && this.character.x <= eachObstacle.x+eachObstacle.width) &&
-            (this.character.y + this.character.height >= eachObstacle.y && this.character.y + this.character.height <= eachObstacle.y+eachObstacle.height)){
-
+            (this.character.y + this.character.height >= eachObstacle.y && this.character.y + this.character.height <= eachObstacle.y + eachObstacle.height)){
+              
+              sound.play();
               this.character.y = eachObstacle.y - this.character.height;
               // this.character.y += 5;
               this.character.onTheBlock = true;
@@ -61,20 +40,41 @@ window.onload = function() {
 }
 
 
-
-  pointsCollector(){}
-
   drawEverything(){
+    this.building.drawBuilding();
+    this.building.drawLogo();
     this.character.drawCharacter();
     this.blocks.forEach((oneBlock)=>{
       oneBlock.blocksDraw();
     })
   }
 
-  gameOver(){}
+  gameOver(){
 
-  checkIfWin(){}
+
+  }
+
+  checkIfWin(){
+    if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
+    (this.character.y + this.character.height >= this.building.y && this.character.y <= this.building.y+this.building.height)){
+      alert("YOU DA WINNER!");
+    }
+  }
   
+
+
+  // timer() {
+  // var i = 1;
+  // setInterval(()=> {
+  //   console.log(i);
+  //   i++;
+  //   if(i > 10) {
+  //     clearInterval(timer);
+  //   }
+  //   }, 1000);
+  // }
+
+
 
  }
 
@@ -147,7 +147,7 @@ window.onload = function() {
       else{
         this.y += 5;
       }
-    }, 50)
+    }, 35)
 
   }
 
@@ -201,32 +201,72 @@ window.onload = function() {
   } 
   }
   
+  class Building{
+    constructor(){
+      this.x = 700;
+      this.y = 30;
+      this.width = 50;
+      this.height = 50;
+      this.imageSource = "../images/building-icon.png"
+    }
+
+    drawBuilding(){
+      const img = new Image();
+      img.src = this.imageSource;
+      ctx.drawImage(img, this.x, this.y, this.width, this.height);
+    }
+
+    drawLogo(){
+      const img = new Image();
+      img.src = "../images/building-co.png";
+      ctx.drawImage(img, 650, 30, 40, 40);
+    }
+
+  }
+
+  // class Timer{
+  //   constructor(){
+  //   this.i = 1;
+  //   this.timer = setInterval(function() {
+  //       console.log(i);
+  //       i++;
+  //       if(i > 10) {
+  //       clearInterval(timer);
+  //       }
+  //     }, 1000);
+  //   }
+  // }
+  
+  
+  
 
   var newGame;
   
     newGame = new HeadJump();
     newGame.character = new Character;
-    newGame.character.drawCharacter();
+    // newGame.character.drawCharacter();
     newGame.character.moveAround();
-
-
-    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260), new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,554));
-
+    newGame.building = new Building;
+  
+    
+    newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260),new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,554));
+    
     for(i=0; i< newGame.blocks.length; i++){
       newGame.blocks[i].blocksMoveRandom();
       // console.log(`new x of block ${i} is ${newGame.blocks[i].x}`)
     }
-
-  
-
-
-  function animate(){
-
-    // setInterval(()=>{
-      ctx.clearRect(0,0,800,600);
-      newGame.drawEverything();
-
-      newGame.collisionCheck();
+    
+    
+    
+    
+    function animate(){
+      
+      // setInterval(()=>{
+        ctx.clearRect(0,0,800,600);
+        newGame.drawEverything();
+        // newGame.timer();
+        newGame.collisionCheck();
+        newGame.checkIfWin();
       
     // },50)
 
@@ -234,7 +274,11 @@ window.onload = function() {
   }
 
   document.onkeydown = function(e){
-    animate();
+    // animate();
+    if(e.key === " "){
+      animate();
+    }
+
     let whereToGo = e.keyCode;
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
