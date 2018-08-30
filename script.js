@@ -4,12 +4,15 @@ window.onload = function() {
   var ctx = document.querySelector("#theCanvas").getContext('2d');
   var sound = new Audio();
   sound.src = "../sounds/jump.mp3";
+  var soundScream = new Audio();
+  soundScream.src = "";
+
  class HeadJump{
   constructor(){
     this.character = {};
     this.blocks = [];
     this.building;
-    this.lifes = 3;
+    this.gameStarted = false;
 
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
     // this.score = score;
@@ -20,6 +23,7 @@ window.onload = function() {
 
             if((this.character.x + this.character.width >= eachObstacle.x && this.character.x <= eachObstacle.x+eachObstacle.width) &&
             (this.character.y + this.character.height >= eachObstacle.y && this.character.y + this.character.height <= eachObstacle.y + eachObstacle.height)){
+              this.gameStarted = true;
               
               sound.play();
               this.character.y = eachObstacle.y - this.character.height;
@@ -32,7 +36,7 @@ window.onload = function() {
             }
             else {
               if(this.character.onTheBlock === false) {
-                this.character.upLimit =500;
+                this.character.upLimit = 500;
               }
             }
 
@@ -50,7 +54,10 @@ window.onload = function() {
   }
 
   gameOver(){
+    if(this.character.y >= 550 && this.gameStarted === true){
 
+      alert("you lose!");
+    }
 
   }
 
@@ -63,16 +70,44 @@ window.onload = function() {
   
 
 
-  // timer() {
-  // var i = 1;
-  // setInterval(()=> {
-  //   console.log(i);
-  //   i++;
-  //   if(i > 10) {
-  //     clearInterval(timer);
-  //   }
-  //   }, 1000);
+  timer() {
+  var ms = 1;
+  var s = 0;
+
+  
+  setInterval(()=> {
+    ms++;
+    if(ms >= 100){
+      ms = 0;
+      s++
+    }
+    console.log(ms);
+    console.log("seconds: " + s);
+    
+    document.getElementById("timer").innerHTML = `${s} : ${ms}`
+
+    }, 10);
+
+    
+ 
+   
+  }
+
+  // updateTimer(){
+
+
+
   // }
+  // timer() {
+  //   var i = 1;
+  //   setInterval(()=> {
+  //     console.log(i);
+  //     i++;
+  
+      
+  //     document.getElementById("timer").innerHTML = i;
+  //     }, 1000);
+  //   }
 
 
 
@@ -246,7 +281,9 @@ window.onload = function() {
     newGame.character = new Character;
     // newGame.character.drawCharacter();
     newGame.character.moveAround();
+    
     newGame.building = new Building;
+
   
     
     newGame.blocks.push(new Blocks(100,100),new Blocks (200,140), new Blocks (480,180), new Blocks (150,220), new Blocks(400,260),new Blocks(450,300),new Blocks (210,340),new Blocks (300,380),new Blocks (250,420),new Blocks (500,460), new Blocks (50,500),new Blocks (350,554));
@@ -264,9 +301,10 @@ window.onload = function() {
       // setInterval(()=>{
         ctx.clearRect(0,0,800,600);
         newGame.drawEverything();
-        // newGame.timer();
+        
         newGame.collisionCheck();
         newGame.checkIfWin();
+        newGame.gameOver();
       
     // },50)
 
@@ -283,6 +321,7 @@ window.onload = function() {
     newGame.character.moveAround(whereToGo);
     if(e.keyCode === 38){
       newGame.character.update();
+      newGame.timer();
       // newGame.character.controlJump();
       // setTimeout(()=>{
       //   console.log("animating")
