@@ -16,9 +16,6 @@ window.onload = function() {
     this.building;
     this.gameStarted = false;
     this.score;
-
-    // this.ctx = document.querySelector("#theCanvas").getContext('2d')
-    // this.score = score;
   }
 
   collisionCheck(){
@@ -71,13 +68,21 @@ window.onload = function() {
     if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
     (this.character.y + this.character.height >= this.building.y && this.character.y <= this.building.y+this.building.height)){
       soundWin.play();
-      // if (alert(`YOU DA WINNER! You time score is ${this.score}`){
-      //   ctx.clear()
+      this.make_base();
+      alert(`YOU DA WINNER! Your time score is ${this.score}`);
+      // if (alert(`YOU DA WINNER! Your time score is ${this.score}`)) {
       // }
     }
   }
   
+    make_base() {
+     const baseImage = new Image();
+ 
+      baseImage.src = '../images/nick-win.jpg';
+      ctx.drawImage(baseImage, 0, 100, 700, 500);
 
+    }
+  
 
   timer() {
   var ms = 1;
@@ -104,24 +109,6 @@ window.onload = function() {
  
    
   }
-
-  // updateTimer(){
-
-
-
-  // }
-  // timer() {
-  //   var i = 1;
-  //   setInterval(()=> {
-  //     console.log(i);
-  //     i++;
-  
-      
-  //     document.getElementById("timer").innerHTML = i;
-  //     }, 1000);
-  //   }
-
-
 
  }
 
@@ -271,22 +258,7 @@ window.onload = function() {
 
   }
 
-  // class Timer{
-  //   constructor(){
-  //   this.i = 1;
-  //   this.timer = setInterval(function() {
-  //       console.log(i);
-  //       i++;
-  //       if(i > 10) {
-  //       clearInterval(timer);
-  //       }
-  //     }, 1000);
-  //   }
-  // }
-  
-  
-  
-
+    
   var newGame;
   
     newGame = new HeadJump();
