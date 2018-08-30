@@ -83,9 +83,12 @@ window.onload = function() {
     }
     console.log(ms);
     console.log("seconds: " + s);
-    
-    document.getElementById("timer").innerHTML = `${s} : ${ms}`
-
+    if(s < 10){
+      document.getElementById("timer").innerHTML = `0${s} : ${ms}`
+    }
+    else{
+      document.getElementById("timer").innerHTML = `${s} : ${ms}`
+    }
     }, 10);
 
     
