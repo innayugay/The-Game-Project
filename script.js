@@ -71,7 +71,9 @@ window.onload = function() {
     if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
     (this.character.y + this.character.height >= this.building.y && this.character.y <= this.building.y+this.building.height)){
       soundWin.play();
-      alert("YOU DA WINNER!");
+      // if (alert(`YOU DA WINNER! You time score is ${this.score}`){
+      //   ctx.clear()
+      // }
     }
   }
   
