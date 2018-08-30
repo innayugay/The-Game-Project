@@ -19,4 +19,10 @@ body {
   position: absolute;
   margin-top: 20px;
   color: white;
+  font-family: the-font;
+}
+
+@font-face{
+  font-family: the-font;
+  src : url("../fonts/Timoteo.ttf");
 }

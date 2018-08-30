@@ -4,8 +4,10 @@ window.onload = function() {
   var ctx = document.querySelector("#theCanvas").getContext('2d');
   var sound = new Audio();
   sound.src = "../sounds/jump.mp3";
-  var soundScream = new Audio();
-  soundScream.src = "";
+  var soundLose = new Audio();
+  soundLose.src = "../sounds/loselose.mp3";
+  var soundWin = new Audio();
+  soundWin.src = "../sounds/win.mp3";
 
  class HeadJump{
   constructor(){
@@ -13,6 +15,7 @@ window.onload = function() {
     this.blocks = [];
     this.building;
     this.gameStarted = false;
+    this.score;
 
     // this.ctx = document.querySelector("#theCanvas").getContext('2d')
     // this.score = score;
@@ -55,8 +58,11 @@ window.onload = function() {
 
   gameOver(){
     if(this.character.y >= 550 && this.gameStarted === true){
+      soundLose.play();
+     if( alert(`You lost! Your time score is : ${this.score}`)){
 
-      alert("you lose!");
+      //append a popup
+     }
     }
 
   }
@@ -64,6 +70,7 @@ window.onload = function() {
   checkIfWin(){
     if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
     (this.character.y + this.character.height >= this.building.y && this.character.y <= this.building.y+this.building.height)){
+      soundWin.play();
       alert("YOU DA WINNER!");
     }
   }
@@ -84,10 +91,10 @@ window.onload = function() {
     console.log(ms);
     console.log("seconds: " + s);
     if(s < 10){
-      document.getElementById("timer").innerHTML = `0${s} : ${ms}`
+      this.score = document.getElementById("timer").innerHTML = `0${s} : ${ms}`
     }
     else{
-      document.getElementById("timer").innerHTML = `${s} : ${ms}`
+      this.score = document.getElementById("timer").innerHTML = `${s} : ${ms}`
     }
     }, 10);
 

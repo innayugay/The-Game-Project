@@ -12,9 +12,9 @@ body {
 .background{
   /* background-color: rgb(1,196,183,0.7); */
   text-align: center;
-  margin-top: 200px;
-  font-family: Courier New;
-  font-size: 40px;
+  margin-top: 100px;
+  font-family: the-font;
+  font-size: 35px;
   color: rgb(61, 117, 122)
 
 }
@@ -23,11 +23,14 @@ body {
   flex-direction: column;
   /* justify-content: flex-start; */
   align-items: center;
+  color: rgb(61, 117, 122);
+  
 }
 
 .content p{
   width: 20vw;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: para-font;
+  font-size: 17px;
 
 }
 .get-in-page {
@@ -40,7 +43,7 @@ body {
   height: 120px;
   width: 250px;
   font-size: 25px;
-  font-family: Courier New;
+  font-family: para-font;
   border-radius: 50px;
   text-decoration: none;
   color: white;
@@ -48,6 +51,17 @@ body {
 }
 
 button a{
-  color: white;
+  color: rgb(32, 39, 102, 0.5);
   text-decoration: none;
+}
+
+@font-face{
+  font-family: the-font;
+  /* src : url("fonts/batavia_kota/BATAVIA\ KOTA.ttf"); */
+  src:url("fonts/Dynamix.ttf")
+}
+
+@font-face{
+  font-family: para-font;
+  src: url("fonts/chilly_cherry/Chilly\ Cherry\ DEMO.otf");
 }
