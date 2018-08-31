@@ -66,7 +66,7 @@ window.onload = function() {
 
   checkIfWin(){
     if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
-    (this.character.y + this.character.height >= this.building.y && this.character.y <= this.building.y+this.building.height)){
+    (this.character.y + this.character.height >= this.building.y && this.character.y + this.character.height <= this.building.y+this.building.height)){
       alert(`YOU DA WINNER! Your time score is ${this.score}`);
       soundWin.play();
       this.make_base();
@@ -138,13 +138,13 @@ window.onload = function() {
   switch(number){
     case 37: //left key
     if(this.x > 20){
-      this.x -= 10;
+      this.x -= 18;
     }
     break;
 
     case 39: //right key
     if(this.x < 760){
-      this.x += 10;
+      this.x += 18;
     }
     break;
     default:
@@ -192,7 +192,7 @@ window.onload = function() {
     this.width = 70;
     this.height = 10;
     this.color = "rgb(29, 109, 9)"
-    // this.ctx = document.querySelector("#theCanvas").getContext('2d')
+ 
 
   }
   blocksDraw(){
