@@ -21,8 +21,10 @@ window.onload = function() {
   collisionCheck(){
     this.blocks.forEach((eachObstacle)=>{
 
-            if((this.character.x + this.character.width >= eachObstacle.x && this.character.x <= eachObstacle.x+eachObstacle.width) &&
-            (this.character.y + this.character.height >= eachObstacle.y && this.character.y + this.character.height <= eachObstacle.y + eachObstacle.height)){
+            if((this.character.x + this.character.width >= eachObstacle.x && 
+              this.character.x <= eachObstacle.x+eachObstacle.width) &&
+            (this.character.y + this.character.height >= eachObstacle.y && 
+              this.character.y + this.character.height <= eachObstacle.y + eachObstacle.height)){
               this.gameStarted = true;
               
               sound.play();
@@ -67,8 +69,8 @@ window.onload = function() {
   checkIfWin(){
     if((this.character.x + this.character.width >= this.building.x && this.character.x <= this.building.x+this.building.width) &&
     (this.character.y + this.character.height >= this.building.y && this.character.y + this.character.height <= this.building.y+this.building.height)){
-      alert(`YOU DA WINNER! Your time score is ${this.score}`);
       soundWin.play();
+      alert(`YOU DA WINNER! Your time score is ${this.score}`);
       this.make_base();
       if (alert(`YOU DA WINNER! Your time score is ${this.score}`)) {
       }
@@ -155,12 +157,9 @@ window.onload = function() {
 
   
    update(){
-
     this.upLimit = 500;
     var jumpUp = false;
     var jumpDown = false;
-
-    
     setInterval(()=>{
       if(this.y >= this.upLimit + 50){
       jumpUp = true;
@@ -177,9 +176,7 @@ window.onload = function() {
         this.y += 5;
       }
     }, 35)
-
   }
-
 }
 
 
